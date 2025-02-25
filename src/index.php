@@ -41,20 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
 <html>
 <head>
     <title>Codenames</title>
-    <style>
-        .word-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
-        .word-card { padding: 10px; border: 1px solid black; text-align: center; cursor: pointer; }
-        .team_blue { background-color: blue; color: white; }
-        .team_red { background-color: red; color: white; }
-        .team_neutral { background-color: lightgray; }
-        .team_assassin { background-color: black; color: white; }
-        .hidden { background-color: gray; }
-        .chat-box { border: 1px solid black; padding: 10px; height: 200px; overflow-y: scroll; }
-    </style>
     <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         gameCode = "<?= $_GET['code'] ?? "" ?>";
+
         function updateGame() {
             $.get("server.php", { code: gameCode }, function(data) {
                 let game = JSON.parse(data);

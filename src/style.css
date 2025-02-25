@@ -1,0 +1,128 @@
+body
+{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-attachment: fixed !important;
+}
+
+body.red
+{
+    background: rgb(96,27,12);
+    background: linear-gradient(145deg, rgba(96,27,12,1) 0%, rgba(177,72,40,1) 40%, rgba(177,72,40,1) 66%, rgba(115,37,24,1) 100%);
+}
+
+body.blue
+{
+    background: rgb(7,59,83);
+    background: linear-gradient(145deg, rgba(7,59,83,1) 0%, rgba(84,161,189,1) 40%, rgba(84,161,189,1) 66%, rgba(50,116,150,1) 100%);
+}
+
+h1, h2
+{
+    color: white;
+}
+
+input
+{
+    padding: 5px;
+    border-radius: 5px;
+    border: 5px solid rgb(180,183,190);
+}
+
+button
+{
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    background: #fff200;
+    font-weight: bold;
+}
+
+.word-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin: 20px 0px;
+}
+
+.word-card {
+    padding: 10px;
+    border: 5px solid;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.team_blue {
+    background: rgb(13,138,160);
+    background: linear-gradient(90deg, rgba(13,138,160,1) 0%, rgba(34,216,237,1) 100%);
+    color: white;
+    border-color: #ade5e6;
+}
+
+.team_red {
+    background: rgb(204,76,31);
+    background: linear-gradient(90deg, rgba(204,76,31,1) 0%, rgba(248,130,56,1) 100%);
+    color: white;
+    border-color: #ffb37e;
+}
+
+.team_neutral {
+    background: rgb(180,183,190);
+    background: linear-gradient(90deg, rgba(180,183,190,1) 0%, rgba(232,234,244,1) 100%);
+    border-color: #8e938d;
+}
+
+.team_assassin {
+    background: rgb(56,57,59);
+    background: linear-gradient(90deg, rgba(56,57,59,1) 0%, rgba(104,105,110,1) 100%);
+    color: white;
+    border-color: #8e938d;
+}
+
+.hidden {
+    background-color: gray;
+}
+
+.chat-box {
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    height: 200px;
+    overflow-y: scroll;
+}
+
+@media only screen and (orientation: landscape) {
+    .container {
+        display: flex;
+    }
+
+    .game-container {
+        flex: 2;
+        margin: 10px;
+    }
+
+    .chat-container {
+        flex: 1;
+        margin: 0px 10px;
+    }
+
+    .chat-box {
+        height: 50vh;
+    }
+}
+
+@media only screen and (orientation: portrait) {
+    .container {
+        display: block;
+    }
+
+    .chat-container {
+        margin-top: 20px;
+    }
+}
