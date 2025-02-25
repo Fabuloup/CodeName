@@ -107,24 +107,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
     </script>
 </head>
 <body>
-    <h1>Codenames</h1>
-    <div class="container">
-        <div class="game-container">
-            <h2 id="game-state">Tour : ...</h2>
-            <div class="pseudo-container">
-                <input type="text" id="pseudo-input" placeholder="Entrez votre pseudo..." onchange="sendPseudo()" value="<?= $_SESSION['pseudo'] ?>">
-                <button onclick="sendChiefApplication()">Devenir chef</button>
+    <?php if (!isset($_GET['code'])): ?>
+        <p>Veuillez fournir un code de partie dans l'URL.</p>
+    <?php else: ?>
+        <h1>Codenames</h1>
+        <div class="container">
+            <div class="game-container">
+                <h2 id="game-state">Tour : ...</h2>
+                <div class="pseudo-container">
+                    <input type="text" id="pseudo-input" placeholder="Entrez votre pseudo..." onchange="sendPseudo()" value="<?= $_SESSION['pseudo'] ?>">
+                    <button onclick="sendChiefApplication()">Devenir chef</button>
+                </div>
+                <div class="word-grid"></div>
+                <button onclick="resetGame()">Relancer la partie</button>
             </div>
-            <div class="word-grid"></div>
-            <button onclick="resetGame()">Relancer la partie</button>
+            
+            <div class="chat-container">
+                <h2>Chat</h2>
+                <div class="chat-box"></div>
+                <input type="text" id="chat-input" placeholder="Tapez votre message...">
+                <button onclick="sendMessage()">Envoyer</button>
+            </div>
         </div>
-        
-        <div class="chat-container">
-            <h2>Chat</h2>
-            <div class="chat-box"></div>
-            <input type="text" id="chat-input" placeholder="Tapez votre message...">
-            <button onclick="sendMessage()">Envoyer</button>
-        </div>
-    </div>
+    <?php endif; ?>
 </body>
 </html>
