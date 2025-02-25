@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
         .hidden { background-color: gray; }
         .chat-box { border: 1px solid black; padding: 10px; height: 200px; overflow-y: scroll; }
     </style>
+    <link rel="icon" href="favicon.ico">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         gameCode = "<?= $_GET['code'] ?? "" ?>";
