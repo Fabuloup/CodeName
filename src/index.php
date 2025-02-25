@@ -92,6 +92,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
             }
         }
 
+        function skipTurn() {
+            $.post("server.php", { code: gameCode, skipTurn: true }, updateGame);
+        }
+
         function resetGame() {
             if (confirm("Êtes-vous sûr de vouloir relancer la partie ?")) {
                 $.get("index.php", { code: gameCode, reset: true }, function() {
@@ -119,6 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
                     <button onclick="sendChiefApplication()">Devenir chef</button>
                 </div>
                 <div class="word-grid"></div>
+                <button onclick="skipTurn()">Passer le tour</button>
                 <button onclick="resetGame()">Relancer la partie</button>
             </div>
             

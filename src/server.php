@@ -122,8 +122,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    
-    
     if (isset($data['word'])) {
         $word = $data['word'];
         if (isset($games[$code]['revealed'][$word]) && !$games[$code]['revealed'][$word]) {
@@ -133,6 +131,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
+
+    if (isset($data['skipTurn'])) {
+        $games[$code]['turn'] = ($games[$code]['turn'] === 'red') ? 'blue' : 'red';
+    }	
     
     saveGames($games);
     echo json_encode($games[$code]);
