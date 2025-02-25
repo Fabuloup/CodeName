@@ -83,6 +83,10 @@ button
     border-color: #8e938d;
 }
 
+.revealed {
+    border-color: #fff200;
+}
+
 .hidden {
     background-color: gray;
 }

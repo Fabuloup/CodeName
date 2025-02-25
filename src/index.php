@@ -52,7 +52,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
                 let game = JSON.parse(data);
                 $(".word-grid").html("");
                 game.words.forEach(word => {
-                    let revealedClass = game.revealed[word] || game.chief.includes($("#pseudo-input").val()) ? " team_" + game.teams[word] : " hidden";
+                    let isChief = game.chief.includes($("#pseudo-input").val());
+                    let revealedClass = isChief || game.revealed[word] ? " team_" + game.teams[word] : " hidden";
+                    if(isChief && game.revealed[word])
+                    {
+                        revealedClass += " revealed";
+                    }
                     $(".word-grid").append(`<div class='word-card${revealedClass}' onclick='selectWord("${word}")'>${word}</div>`);
                 });
                 $(".chat-box").html(game.chat.map(msg => `<p>${msg}</p>`).join(""));
