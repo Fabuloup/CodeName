@@ -18,7 +18,7 @@ function saveGames($games) {
 
 // Function to generate a random word list for the game
 function generateWordList() {
-    $words = ["apple", "banana", "cat", "dog", "elephant", "falcon", "guitar", "honey", "island", "jungle", "kangaroo", "lemon", "mountain", "notebook", "octopus", "piano", "queen", "rocket", "sunflower", "tiger", "umbrella", "volcano", "whale", "xylophone", "yogurt"];
+    $words = ["pomme", "banane", "chat", "chien", "éléphant", "faucon", "guitare", "miel", "île", "jungle", "kangourou", "citron", "montagne", "cahier", "pieuvre", "piano", "reine", "fusée", "tournesol", "tigre", "parapluie", "volcan", "baleine", "xylophone", "yaourt"];
     shuffle($words);
     return array_slice($words, 0, 25);
 }
