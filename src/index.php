@@ -52,11 +52,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
                 let game = JSON.parse(data);
                 $(".word-grid").html("");
                 game.words.forEach(word => {
-                    let revealedClass = game.revealed[word] ? " team_" + game.teams[word] : " hidden";
+                    let revealedClass = game.revealed[word] || game.chief.includes($("#pseudo-input").val()) ? " team_" + game.teams[word] : " hidden";
                     $(".word-grid").append(`<div class='word-card${revealedClass}' onclick='selectWord("${word}")'>${word}</div>`);
                 });
                 $(".chat-box").html(game.chat.map(msg => `<p>${msg}</p>`).join(""));
-                $("#game-state").text("Current Turn: " + game.turn.charAt(0).toUpperCase() + game.turn.slice(1) + " Team");
+                $("#game-state").text("Tour : " + game.turn.charAt(0).toUpperCase() + game.turn.slice(1) + " Team");
+                if (game.turn === "blue") {
+                    $("body").removeClass("red").addClass("blue");
+                } else if (game.turn === "red") {
+                    $("body").removeClass("blue").addClass("red");
+                }
             });
         }
         
@@ -80,6 +85,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
             }
         }
         
+        function sendChiefApplication() {
+            let pseudo = $("#pseudo-input").val();
+            if (pseudo.trim() !== "") {
+                $.post("server.php", { code: gameCode, pseudo: pseudo, chiefApplication: true }, updateGame);
+            }
+        }
+
+        function resetGame() {
+            if (confirm("Êtes-vous sûr de vouloir relancer la partie ?")) {
+                $.get("index.php", { code: gameCode, reset: true }, function() {
+                    updateGame();
+                });
+            }
+        }
+        
         $(document).ready(function() {
             updateGame();
             setInterval(updateGame, 2000);
@@ -88,19 +108,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
 </head>
 <body>
     <h1>Codenames</h1>
-    <div class="game-container">
-        <h2 id="game-state">Current Turn: ...</h2>
-        <div class="pseudo-container">
-            <input type="text" id="pseudo-input" placeholder="Enter your pseudo..." onchange="sendPseudo()" value="<?= $_SESSION['pseudo'] ?>">
+    <div class="container">
+        <div class="game-container">
+            <h2 id="game-state">Tour : ...</h2>
+            <div class="pseudo-container">
+                <input type="text" id="pseudo-input" placeholder="Entrez votre pseudo..." onchange="sendPseudo()" value="<?= $_SESSION['pseudo'] ?>">
+                <button onclick="sendChiefApplication()">Devenir chef</button>
+            </div>
+            <div class="word-grid"></div>
+            <button onclick="resetGame()">Relancer la partie</button>
         </div>
-        <div class="word-grid"></div>
-    </div>
-    
-    <div class="chat-container">
-        <h2>Chat</h2>
-        <div class="chat-box"></div>
-        <input type="text" id="chat-input" placeholder="Type a message...">
-        <button onclick="sendMessage()">Send</button>
+        
+        <div class="chat-container">
+            <h2>Chat</h2>
+            <div class="chat-box"></div>
+            <input type="text" id="chat-input" placeholder="Tapez votre message...">
+            <button onclick="sendMessage()">Envoyer</button>
+        </div>
     </div>
 </body>
 </html>

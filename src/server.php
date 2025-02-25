@@ -43,6 +43,7 @@ function initGame($code) {
         'revealed' => [],
         'turn' => 'red',
         'players' => [],
+        'chief' => [],
         'chat' => []
     ];
     $games[$code]['teams'] = assignTeams($games[$code]['words']);
@@ -93,6 +94,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $oldPseudo = $_SESSION['pseudo'];
             if (($key = array_search($oldPseudo, $games[$code]['players'])) !== false) {
                 $games[$code]['players'][$key] = $pseudo;
+                foreach ($games[$code]['chat'] as &$message) {
+                    $message = str_replace($oldPseudo . ':', $pseudo . ':', $message);
+                }
+                if (($key = array_search($oldPseudo, $games[$code]['chief'])) !== false) {
+                    $games[$code]['chief'][$key] = $pseudo;
+                }
             }
             else
             {
@@ -103,12 +110,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         {
             array_push($games[$code]['players'], $pseudo);
         }
-        $_SESSION['pseudo'] = $data['pseudo'];
+        $_SESSION['pseudo'] = $pseudo;
+
+        if(isset($data['chiefApplication']) && !in_array($pseudo, $games[$code]['chief']))
+        {
+            array_push($games[$code]['chief'], $pseudo);
+        }
+
+        if (isset($data['message'])) {
+            $games[$code]['chat'][] = htmlspecialchars($data['pseudo']) . ': ' . htmlspecialchars($data['message']);
+        }
     }
+
     
-    if (isset($data['message'])) {
-        $games[$code]['chat'][] = htmlspecialchars($data['pseudo']) . ': ' . htmlspecialchars($data['message']);
-    }
     
     if (isset($data['word'])) {
         $word = $data['word'];
